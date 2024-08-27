@@ -359,58 +359,6 @@ namespace Pokedex
                 CargarPokemon();
             }
         }
-        private void SiguientePagina(object sender, MouseButtonEventArgs e)
-        {
-            switch (PaginaActual)
-            {
-                case 1:
-                    PaginaActual++;
-                    Pagina1.Opacity = 0;
-                    Pagina2.Opacity = 1;
-                    break;
-                case 2:
-                    PaginaActual++;
-                    Pagina2.Opacity = 0;
-                    Pagina3.Opacity = 1;
-                    break;
-                case 3:
-                    PaginaActual++;
-                    Pagina3.Opacity = 0;
-                    Pagina4.Opacity = 1;
-                    break;
-                case 4:
-                    PaginaActual = 1;
-                    Pagina4.Opacity = 0;
-                    Pagina1.Opacity = 1;
-                    break;
-            }
-        }
-        private void AnteriorPagina(object sender, MouseButtonEventArgs e)
-        {
-            switch (PaginaActual)
-            {
-                case 1:
-                    PaginaActual = 4;
-                    Pagina1.Opacity = 0;
-                    Pagina4.Opacity = 1;
-                    break;
-                case 2:
-                    PaginaActual--;
-                    Pagina2.Opacity = 0;
-                    Pagina1.Opacity = 1;
-                    break;
-                case 3:
-                    PaginaActual--;
-                    Pagina3.Opacity = 0;
-                    Pagina2.Opacity = 1;
-                    break;
-                case 4:
-                    PaginaActual--;
-                    Pagina4.Opacity = 0;
-                    Pagina3.Opacity = 1;
-                    break;
-            }
-        }
         private async void PlayAudio(object sender, MouseButtonEventArgs e)
         {
             try
