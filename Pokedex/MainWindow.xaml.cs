@@ -124,16 +124,65 @@ namespace Pokedex
         private WaveOutEvent _waveOut;
         private VorbisWaveReader _vorbisReader;
         private string _tempFilePath;
-
         public MainWindow()
         {
             InitializeComponent();
-            CargarPokemon();
         }
+
+        private void MoverVentana(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+        private void Apagado(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void TamañoVentana(object sender, MouseButtonEventArgs e)
+        {
+            if (this is Window ventana && sender is FontAwesome.Sharp.IconBlock Botón)
+            {
+                if (ventana.WindowState == WindowState.Maximized) { ventana.WindowState = WindowState.Normal; }
+                else if (ventana.WindowState == WindowState.Normal) { ventana.WindowState = WindowState.Maximized; }
+            }
+        }
+        private void MinimizarVentana(object sender, MouseButtonEventArgs e)
+        {
+            if (this is Window ventana)
+            {
+                ventana.WindowState = WindowState.Minimized;
+            }
+        }
+        private void VentanaCambioDeEstado(object sender, EventArgs e)
+        {
+            if (this is Window ventana)
+            {
+                if (ventana.WindowState == WindowState.Maximized) {
+                    VentanaNormal.Icon = FontAwesome.Sharp.IconChar.WindowRestore; 
+                    EstructuraVentana.CornerRadius = new CornerRadius(0);
+                    EstructuraVentana.Margin = new Thickness(7);
+                }
+                else if (ventana.WindowState == WindowState.Normal) { 
+                    VentanaNormal.Icon = FontAwesome.Sharp.IconChar.WindowMaximize; 
+                    EstructuraVentana.CornerRadius = new CornerRadius(14);
+                    EstructuraVentana.Margin = new Thickness(10);
+                }
+            }
+        }
+        private void VentanaEscalada(object sender, SizeChangedEventArgs e)
+        {
+            if (this is Window Ventana)
+            {
+                ContenidoVentana.Width = Ventana.ActualWidth;
+            }
+        }
+
         public static string Mayus(string input)
         {
-            if (string.IsNullOrEmpty(input)) {return input;}
-            return char.ToUpper(input[0], CultureInfo.CurrentCulture)+input.Substring(1).ToLower(CultureInfo.CurrentCulture);
+            if (string.IsNullOrEmpty(input)) { return input; }
+            return char.ToUpper(input[0], CultureInfo.CurrentCulture) + input.Substring(1).ToLower(CultureInfo.CurrentCulture);
         }
         private async void CargarPokemon()
         {
@@ -152,9 +201,9 @@ namespace Pokedex
             Colores.Text = Mayus(Actual.Color.Name);
             BaseFriendship.Text = $"{Actual.Base_Happiness}pts";
             CaptureRate.Text = $"{Actual.Capture_Rate}";
-            if (Actual.Shape == null) { Actual.Shape = new(){ Name = "¿?" }; } else { PokeShape.Text = Mayus(Actual.Shape.Name); }
-            if (Actual.Growth_Rate == null) { Actual.Growth_Rate = new(){ Name = "¿?" }; } else { GrowthRate.Text = Mayus(Actual.Growth_Rate.Name); }
-            DescripciónPokemon.Text = (Actual.Flavor_Text_Entries.LastOrDefault(entry => entry.Language.Name == "en").Flavor_Text).Replace("\n"," ");
+            if (Actual.Shape == null) { Actual.Shape = new() { Name = "¿?" }; } else { PokeShape.Text = Mayus(Actual.Shape.Name); }
+            if (Actual.Growth_Rate == null) { Actual.Growth_Rate = new() { Name = "¿?" }; } else { GrowthRate.Text = Mayus(Actual.Growth_Rate.Name); }
+            DescripciónPokemon.Text = (Actual.Flavor_Text_Entries.LastOrDefault(entry => entry.Language.Name == "en").Flavor_Text).Replace("\n", " ");
             string sprite = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{Actual.Id}.png";
             GritoActual = $"https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/{Actual.Id}.ogg";
             BitmapImage bitmap = new();
@@ -297,8 +346,8 @@ namespace Pokedex
             Stats.SpecialAttack = Actual.Stats.FirstOrDefault(entry => entry.Stat.Name == "special-attack").Base_Stat;
             Stats.Attack = Actual.Stats.FirstOrDefault(entry => entry.Stat.Name == "attack").Base_Stat;
 
-            PokeHeight.Text = $"{Actual.Height/10}m";
-            PokeWeight.Text = $"{Actual.Weight/10}kg";
+            PokeHeight.Text = $"{Actual.Height / 10}m";
+            PokeWeight.Text = $"{Actual.Weight / 10}kg";
 
 
             Ability.Text = "";
@@ -317,47 +366,6 @@ namespace Pokedex
             }
             if (HiddenAbility.Text == "") { HiddenAbility.Text = "None"; }
 
-        }
-        private void MoverVentana(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
-        }
-        private void Apagado(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
-        }
-        private void SiguientePokemon(object sender, MouseButtonEventArgs e)
-        {
-            if (Aumento.Text == "") { Aumento.Text = "1"; }
-            if ((PokemonActual + int.Parse(Aumento.Text)) <= 1025)
-            {
-                PokemonActual += int.Parse(Aumento.Text);
-                CargarPokemon();
-            }
-            else
-            {
-                PokemonActual = 1025;
-                Aumento.Text = "1";
-                CargarPokemon();
-            }
-        }
-        private void AnteriorPokemon(object sender, MouseButtonEventArgs e)
-        {
-            if (Aumento.Text == "") { Aumento.Text = "1"; }
-            if ((PokemonActual-int.Parse(Aumento.Text)) >= 1)
-            {
-                PokemonActual -= int.Parse(Aumento.Text);
-                CargarPokemon();
-            }
-            else
-            {
-                PokemonActual = 1;
-                Aumento.Text = "1";
-                CargarPokemon();
-            }
         }
         private async void PlayAudio(object sender, MouseButtonEventArgs e)
         {

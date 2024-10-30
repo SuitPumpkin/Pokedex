@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="Negro">#262626</Color>
+    <Color x:Key="Rojo">#C52920</Color>
+    <Color x:Key="RojoObscuto">#FF6B0617</Color>
+    <LinearGradientBrush x:Key="Pantalla" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#D0E7F9" Offset="0.0"/>
+        <GradientStop Color="#A0D2F1" Offset="0.5"/>
+        <GradientStop Color="#88C3E8" Offset="1.0"/>
+    </LinearGradientBrush>
+</ResourceDictionary>
